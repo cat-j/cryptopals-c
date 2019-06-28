@@ -1,4 +1,7 @@
 #include "base64.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #define SEXTETS_IN_QWORD 10
 #define QWORD_SIZE 64
@@ -32,16 +35,16 @@ char* hex_to_base64(char* ascii, uint64_t len) {
             sextet = (data >> 6) | next_highest_bits; // 4 lower prev ++ 2 higher
         }
 
-        encoded[k++] = char_table[sextet];
-        if (i%3 == 2) encoded[k++] = char_table[data & 0x3F]; // extra 6 bits to process
+        encoded[k++] = encoding_table[sextet];
+        if (i%3 == 2) encoded[k++] = encoding_table[data & 0x3F]; // extra 6 bits to process
     }
 
     if (remaining_bits != 0) {
-        encoded[k++] = char_table[next_highest_bits];
+        encoded[k++] = encoding_table[next_highest_bits];
         encoded[k++] = '=';
         if (remaining_bits == 4) encoded[k++] = '=';
     }
 
-    encoded[k++] = NULL;
+    encoded[k++] = 0;
     return encoded;
 }
