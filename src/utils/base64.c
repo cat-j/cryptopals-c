@@ -37,7 +37,7 @@ char* hex_to_base64(char* ascii, uint64_t len) {
     if (remaining_bits != 0) {
         encoded[k++] = encoding_table[next_highest_bits];
         encoded[k++] = '=';
-        if (remaining_bits == 4) encoded[k++] = '=';
+        if (remaining_bits == 2) encoded[k++] = '=';
     }
 
     encoded[k++] = 0;
