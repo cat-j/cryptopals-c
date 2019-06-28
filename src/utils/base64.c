@@ -3,11 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define SEXTETS_IN_QWORD 10
-#define QWORD_SIZE 64
-#define SEXTET_SIZE 6
-#define SEXTET_MASK 0x3F
-
 /*
 Convert ASCII string to base64.
 Designed with readability (rather than speed) in mind.
