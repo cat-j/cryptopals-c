@@ -1,9 +1,12 @@
 #include "../utils/base64.h"
+#include "../utils/fileutils.h"
 #include <stdio.h>
 
 int main() {
-    char teststr[] = "Man";
-    char* encoded = hex_to_base64((char*) &teststr, 3);
-    printf("%s\n", encoded);
+    char filename[8] = "data.txt";
+    int64_t bytes_read;
+    char* data = read_file(filename, &bytes_read);
+    printf("%s\n", data);
+    // printf("%s\n", encoded);
     return 0;
 }
