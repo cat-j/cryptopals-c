@@ -88,13 +88,10 @@ char* frequency_decrypt(char* ciphertext, uint64_t ciphertext_length, unsigned c
         current_score = score_english_frequency(current_plaintext, ciphertext_length);
         
         if (current_score < best_score) {
-            // I have no idea why memcpy isn't working
-            for (uint64_t j = 0; j < ciphertext_length; ++j) {
-                best_plaintext[j] = current_plaintext[j];
-            }
+            strncpy(best_plaintext, current_plaintext, ciphertext_length);
             best_score = current_score;
         }
-        
+
         free(current_plaintext);
     }
 
