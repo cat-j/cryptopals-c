@@ -1,6 +1,6 @@
 #include "fileutils.h"
 
-char* read_file(char filename[], int64_t* bytes_read) {
+char* hex_decode_file(char filename[], int64_t* bytes_read) {
     FILE* f = fopen(filename, "rb");
     char* buffer;
     int64_t length = -1;

@@ -9,6 +9,6 @@
 Return contents of `filename` and write size to `bytes_read`.
 If an error occurs, write -1.
 */
-char* read_file(char filename[], int64_t* bytes_read);
+char* hex_decode_file(char filename[], int64_t* bytes_read);
 
 #endif
