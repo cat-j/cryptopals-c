@@ -1,5 +1,13 @@
 from argparse import ArgumentParser
 
+def writeBytes(srcName, dstName):
+    dst = open(dstName, 'wb')
+    with open(srcName, 'r+') as src:
+        hexString = src.read()
+        dst.write(bytearray.fromhex(hexString))
+    dst.close()
+    return
+
 def getArgs():
     parser = ArgumentParser()
     parser.add_argument("src", help="Source file: name of file containing ASCII representation of hex string")
@@ -10,11 +18,7 @@ def getArgs():
 # Generate raw byte data for challenges
 def main():
     (srcName, dstName) = getArgs()
-    dst = open(dstName, 'wb')
-    with open(srcName, 'r+') as src:
-        hexString = src.read()
-        dst.write(bytearray.fromhex(hexString))
-    dst.close()
+    writeBytes(srcName, dstName)
     return
 
 main()
