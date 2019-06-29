@@ -30,12 +30,12 @@ char* hex_to_base64(char* ascii, uint64_t len) {
             sextet = (data >> 6) | next_highest_bits; // 4 lower prev ++ 2 higher
         }
 
-        encoded[k++] = encoding_table[sextet];
+        encoded[k++] = encoding_table[(uint64_t) sextet];
         if (i%3 == 2) encoded[k++] = encoding_table[data & 0x3F]; // extra 6 bits to process
     }
 
     if (remaining_bits != 0) {
-        encoded[k++] = encoding_table[next_highest_bits];
+        encoded[k++] = encoding_table[(uint64_t) next_highest_bits];
         encoded[k++] = '=';
         if (remaining_bits == 2) encoded[k++] = '=';
     }
