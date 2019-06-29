@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <float.h>
+#include <string.h>
+#include <stdio.h>
 
 #define ALPHA_SPACE 27
 
@@ -57,5 +60,18 @@ double score_english_frequency(char* plaintext, uint64_t length);
 XOR-combine two equal-length buffers.
 */
 char* xor_buffers(char* buf1, char* buf2, uint64_t length);
+
+/*
+XOR-encrypt (or decrypt) a buffer with a given key.
+*/
+char* xor_encrypt(char* plaintext, unsigned char* key, uint64_t plaintext_length, uint64_t key_length);
+
+/*
+Decrypt ciphertext against every possible one-byte key
+and return the plaintext with the best character frequencies,
+i.e. the least distance from English frequencies.
+Store the key that yielded this plaintext in `key`.
+*/
+char* frequency_decrypt(char* ciphertext, uint64_t ciphertext_length, unsigned char* key);
 
 #endif
