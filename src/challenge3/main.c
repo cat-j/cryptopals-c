@@ -9,8 +9,9 @@ int main() {
     int64_t bytes_read;
     char key;
     char* ciphertext = hex_decode_file(filename, &bytes_read);
-    char* plaintext = frequency_decrypt(ciphertext, bytes_read, &key);
+    char* plaintext = frequency_decrypt(ciphertext, bytes_read, &key, 0);
     printf("%s\n", plaintext);
+    free(ciphertext);
     free(plaintext);
     return 0;
 }

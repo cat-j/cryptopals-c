@@ -46,6 +46,7 @@ double* analyse_frequencies(char* plaintext, uint64_t length) {
         result[i] = (double) counts[i] / length;
     }
 
+    free(counts);
     return result;
 }
 
@@ -59,10 +60,13 @@ double score_english_frequency(char* plaintext, uint64_t length) {
         result += difference * difference;
     }
 
+    free(frequencies);
     return result;
 }
 
-char* xor_encrypt(char* plaintext, unsigned char* key, uint64_t plaintext_length, uint64_t key_length) {
+char* xor_encrypt(char* plaintext, unsigned char* key, uint64_t plaintext_length,
+        uint64_t key_length)
+{
     char* ciphertext = malloc((plaintext_length + 1) * sizeof(char));
     char current_byte;
 
@@ -75,7 +79,9 @@ char* xor_encrypt(char* plaintext, unsigned char* key, uint64_t plaintext_length
     return ciphertext;
 }
 
-char* frequency_decrypt(char* ciphertext, uint64_t ciphertext_length, unsigned char* key) {
+char* frequency_decrypt(char* ciphertext, uint64_t ciphertext_length, unsigned char* key,
+        double* score_ptr)
+{
     const uint64_t key_length = 1;
     unsigned char* current_key = malloc(key_length * sizeof(char));
     char* current_plaintext;
@@ -95,6 +101,55 @@ char* frequency_decrypt(char* ciphertext, uint64_t ciphertext_length, unsigned c
         free(current_plaintext);
     }
 
+    if (score_ptr != 0) {
+        *score_ptr = best_score;
+    }
+
     free(current_key);
     return best_plaintext;
+}
+
+char** get_n_best_plaintexts(char** ciphertexts, uint64_t ciphertext_length, unsigned char** keys,
+        uint64_t n_ciphertexts, uint64_t n, double* scores)
+{
+    char** result = malloc(n * sizeof(char*));
+    double current_score, worst_best_score;
+    char* current_plaintext;
+    double scores[n];
+    uint64_t worst_score_idx;
+
+    // Decrypt the first n ciphertexts
+    for (uint64_t i = 0; i < n; ++i) {
+        current_plaintext = frequency_decrypt(ciphertexts[i], ciphertext_length, keys[i], &current_score);
+        result[i] = current_plaintext;
+        scores[i] = current_score;
+    }
+
+    // Decrypt the rest of the ciphertexts and replace worst of the best whenever a better one is found
+    for (uint64_t i = n; i < n_ciphertexts; ++i) {
+        current_plaintext = frequency_decrypt(ciphertexts[i], ciphertext_length, keys[i], &current_score);
+        worst_best_score = find_max(scores, n, &worst_score_idx);
+        if (current_score < worst_best_score) {
+            strncpy(result[worst_score_idx], current_plaintext, ciphertext_length);
+            scores[worst_score_idx] = current_score;
+        }
+    }
+
+    free(current_plaintext);
+    return result;
+}
+
+double find_max(double arr[], uint64_t length, uint64_t* idx) {
+    double max_so_far = arr[0], current;
+    *idx = 0;
+
+    for (int i = 0; i < length; ++i) {
+        current = arr[i];
+        if (current > max_so_far) {
+            max_so_far = current;
+            *idx = i;
+        }
+    }
+
+    return max_so_far;
 }

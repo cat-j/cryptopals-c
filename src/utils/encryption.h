@@ -72,6 +72,9 @@ and return the plaintext with the best character frequencies,
 i.e. the least distance from English frequencies.
 Store the key that yielded this plaintext in `key`.
 */
-char* frequency_decrypt(char* ciphertext, uint64_t ciphertext_length, unsigned char* key);
+char* frequency_decrypt(char* ciphertext, uint64_t ciphertext_length, unsigned char* key, double* score_ptr);
+
+char** get_n_best_plaintexts(char** ciphertexts, uint64_t ciphertext_length, unsigned char** keys,
+                            uint64_t n_ciphertexts, uint64_t n, double* scores);
 
 #endif
