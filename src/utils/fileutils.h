@@ -18,4 +18,6 @@ If an error occurs, write -1.
 */
 char** read_file_lines(char filename[], int64_t* bytes_per_line, int64_t* lines_read);
 
+void print_hex(char* data, uint64_t length);
+
 #endif

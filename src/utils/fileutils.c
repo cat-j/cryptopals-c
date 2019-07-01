@@ -47,3 +47,10 @@ char** read_file_lines(char filename[], int64_t* bytes_per_line, int64_t* lines_
 
     return array_of_buffers;
 }
+
+void print_hex(char* data, uint64_t length) {
+    for (int i = 0; i < length; ++i) {
+        printf("%02x", data[i]);
+    }
+    printf("\n");
+}
