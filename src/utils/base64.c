@@ -7,7 +7,7 @@
 Convert ASCII string to base64.
 Designed with readability (rather than speed) in mind.
 */
-char* hex_to_base64(char* ascii, uint64_t len) {
+char* base64_encode(char* ascii, uint64_t len) {
     uint64_t k = 0;
     uint64_t n_bits = len << 3;
     uint64_t n_sextets = n_bits / 6;

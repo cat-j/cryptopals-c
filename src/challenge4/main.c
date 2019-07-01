@@ -9,7 +9,7 @@ int main() {
     char filename[] = "byteData";
     int64_t bytes_per_line, lines_read;
     double scores[N_BEST_PLAINTEXTS];
-    char** ciphertexts = hex_decode_file_lines(filename, &bytes_per_line, &lines_read);
+    char** ciphertexts = read_file_lines(filename, &bytes_per_line, &lines_read);
     
     unsigned char** keys = malloc(N_BEST_PLAINTEXTS * sizeof(unsigned char*));
     for (int i = 0; i < N_BEST_PLAINTEXTS; ++i) {

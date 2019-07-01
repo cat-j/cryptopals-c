@@ -6,8 +6,8 @@
 int main() {
     char filename[8] = "byteData";
     int64_t bytes_read;
-    char* data = hex_decode_file(filename, &bytes_read);
-    char* encoded = hex_to_base64(data, strlen(data));
+    char* data = read_file(filename, &bytes_read);
+    char* encoded = base64_encode(data, strlen(data));
     printf("%s\n", encoded);
     return 0;
 }
