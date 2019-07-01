@@ -6,7 +6,7 @@ vpath %.o $(TMP)
 vpath %.d $(TMP)
 
 
-OBJS := encryption.o fileutils.o main.o
+OBJS := encryption.o fileutils.o hamming.o main.o
 OBJS := $(addprefix $(TMP)/, $(OBJS))
 
 

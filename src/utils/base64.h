@@ -11,9 +11,15 @@ static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                                 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
                                 'w', 'x', 'y', 'z', '0', '1', '2', '3',
                                 '4', '5', '6', '7', '8', '9', '+', '/'};
+                                
 /*
 Convert ASCII string to base64.
 */
-char* hex_to_base64(char* ascii, uint64_t len);
+char* base64_encode(char* ascii, uint64_t len);
+
+/*
+Convert base64 string to ASCII.
+*/
+char* base64_decode(char* encoded, uint64_t len);
 
 #endif
