@@ -5,12 +5,12 @@
 #include <string.h>
 
 int main() {
-    char str1[] = "this is a test";
-    char str2[] = "wokka wokka!!!";
-    uint64_t distance = hamming_distance(str1, str2, strlen(str1));
-    printf("%ld\n", distance);
+    // char str1[] = "this is a test";
+    // char str2[] = "wokka wokka!!!";
+    // uint64_t distance = hamming_distance(str1, str2, strlen(str1));
+    // printf("%ld\n", distance);
 
-    char encoded[] = "TWFu";
+    char encoded[] = "TQ==";
     char* decoded = base64_decode(encoded, strlen(encoded));
     printf("%s\n", decoded);
 

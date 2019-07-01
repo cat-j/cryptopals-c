@@ -45,18 +45,22 @@ char* base64_encode(char* ascii, uint64_t length) {
 }
 
 char* base64_decode(char* encoded, uint64_t length) {
-    uint64_t decoded_length = (length << 3) / 6;
-    if (encoded[length-1] == '=')
-        decoded_length -= 1;
-    if (encoded[length-2] == '=')
-        decoded_length -= 1;
-    char* decoded = malloc(decoded_length);
+    uint64_t decoded_length = (length*6) >> 3;
+    if (encoded[length-1] == '=') {
+        decoded_length--;
+    }
+    if (encoded[length-2] == '=') {
+        decoded_length--;
+    }
+
+    char* decoded = malloc(decoded_length + 1);
 
     uint64_t idx = 0;
-    char data, current_byte;
+    unsigned char data, current_byte;
 
-    for (int i = 0; i < length; ++i) {
+    for (int i = 0; i < decoded_length+1; ++i) {
         current_byte = get_index(encoded[i]);
+
         switch (i%4) {
         case 0:
             data = current_byte << 2;
@@ -67,22 +71,27 @@ char* base64_decode(char* encoded, uint64_t length) {
             decoded[idx] = data;
             data = current_byte << 4;
             ++idx;
+            break;
 
         case 2:
             data |= (current_byte >> 2) & 0xF; // higher 4 bits of sextet
             decoded[idx] = data;
             data = current_byte << 6;
             ++idx;
+            break;
 
         case 3:
             data |= current_byte; // whole sextet
             decoded[idx] = data;
             ++idx;
+            break;
         
         default:
             break;
         }
     }
+    
+    decoded[decoded_length] = 0;
 
     return decoded;
 }
