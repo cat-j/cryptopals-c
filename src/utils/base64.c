@@ -7,9 +7,9 @@
 Convert ASCII string to base64.
 Designed with readability (rather than speed) in mind.
 */
-char* base64_encode(char* ascii, uint64_t len) {
+char* base64_encode(char* ascii, uint64_t length) {
     uint64_t k = 0;
-    uint64_t n_bits = len << 3;
+    uint64_t n_bits = length << 3;
     uint64_t n_sextets = n_bits / 6;
     uint64_t remaining_bits = n_bits % 6; // either 0, 2 or 4
     char data, next_highest_bits, sextet;
@@ -17,7 +17,7 @@ char* base64_encode(char* ascii, uint64_t len) {
     uint64_t encoded_len = n_sextets + (remaining_bits >> 1);
     char* encoded = malloc((encoded_len + 1));
     
-    for (uint64_t i = 0; i < len; ++i) {
+    for (uint64_t i = 0; i < length; ++i) {
         data = ascii[i];
 
         if (i%3 == 0) {
@@ -42,4 +42,56 @@ char* base64_encode(char* ascii, uint64_t len) {
 
     encoded[k++] = 0;
     return encoded;
+}
+
+char* base64_decode(char* encoded, uint64_t length) {
+    uint64_t decoded_length = (length << 3) / 6;
+    if (encoded[length-1] == '=')
+        decoded_length -= 1;
+    if (encoded[length-2] == '=')
+        decoded_length -= 1;
+    char* decoded = malloc(decoded_length);
+
+    uint64_t idx = 0;
+    char data, current_byte;
+
+    for (int i = 0; i < length; ++i) {
+        current_byte = get_index(encoded[i]);
+        switch (i%4) {
+        case 0:
+            data = current_byte << 2;
+            break;
+
+        case 1:
+            data |= (current_byte >> 4) & 0x3; // higher 2 bits of sextet
+            decoded[idx] = data;
+            data = current_byte << 4;
+            ++idx;
+
+        case 2:
+            data |= (current_byte >> 2) & 0xF; // higher 4 bits of sextet
+            decoded[idx] = data;
+            data = current_byte << 6;
+            ++idx;
+
+        case 3:
+            data |= current_byte; // whole sextet
+            decoded[idx] = data;
+            ++idx;
+        
+        default:
+            break;
+        }
+    }
+
+    return decoded;
+}
+
+char get_index(char encoded_char) {
+    for (int i = 0; i < ENCODING_TABLE_LENGTH; ++i) {
+        if (encoding_table[i] == encoded_char)
+            return i;
+    }
+    // Not found
+    return -1;
 }

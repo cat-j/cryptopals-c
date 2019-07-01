@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#define ENCODING_TABLE_LENGTH 64
+
 static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                                 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                                 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -15,11 +17,16 @@ static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 /*
 Convert ASCII string to base64.
 */
-char* base64_encode(char* ascii, uint64_t len);
+char* base64_encode(char* ascii, uint64_t length);
 
 /*
 Convert base64 string to ASCII.
 */
-char* base64_decode(char* encoded, uint64_t len);
+char* base64_decode(char* encoded, uint64_t length);
+
+/*
+Get a char's index in the encoding table.
+*/
+char get_index(char encoded_char);
 
 #endif
