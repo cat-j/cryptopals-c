@@ -7,7 +7,7 @@
 int main() {
     char filename[] = "byteData";
     int64_t bytes_read;
-    char key;
+    unsigned char key;
     char* ciphertext = read_file(filename, &bytes_read);
     char* plaintext = frequency_decrypt(ciphertext, bytes_read, &key, 0);
     printf("%s\n", plaintext);
