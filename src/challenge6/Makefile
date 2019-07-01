@@ -6,7 +6,7 @@ vpath %.o $(TMP)
 vpath %.d $(TMP)
 
 
-OBJS := encryption.o fileutils.o main.o
+OBJS := encryption.o fileutils.o hamming.o base64.o main.o
 OBJS := $(addprefix $(TMP)/, $(OBJS))
 
 
@@ -17,4 +17,4 @@ all: solve
 solve: build
 
 build: build_dir $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(BIN)/challenge5
+	$(CC) $(CFLAGS) $(OBJS) -o $(BIN)/challenge6
