@@ -64,7 +64,8 @@ char* xor_buffers(char* buf1, char* buf2, uint64_t length);
 /*
 XOR-encrypt (or decrypt) a buffer with a given key.
 */
-char* xor_encrypt(char* plaintext, unsigned char* key, uint64_t plaintext_length, uint64_t key_length);
+char* xor_encrypt(char* plaintext, unsigned char* key, uint64_t plaintext_length,
+        uint64_t key_length);
 
 /*
 Decrypt ciphertext against every possible one-byte key
@@ -72,9 +73,29 @@ and return the plaintext with the best character frequencies,
 i.e. the least distance from English frequencies.
 Store the key that yielded this plaintext in `key`.
 */
-char* frequency_decrypt(char* ciphertext, uint64_t ciphertext_length, unsigned char* key, double* score_ptr);
+char* frequency_decrypt(char* ciphertext, uint64_t ciphertext_length, unsigned char* key,
+        double* score_ptr);
 
+/*
+Using `frequency_decrypt` and `score_english_frequency`,
+find the `n` plaintexts which are most similar to English.
+Store the keys that yielded them in `keys` and their
+difference from English in `scores`, both of which must be
+arrays of length `n`.
+*/
 char** get_n_best_plaintexts(char** ciphertexts, uint64_t ciphertext_length, unsigned char** keys,
-                            uint64_t n_ciphertexts, uint64_t n, double* scores);
+        uint64_t n_ciphertexts, uint64_t n, double* scores);
+
+/*
+Find the maximum element in an array and store its index
+in `idx`.
+*/
+double find_max(double arr[], uint64_t length, uint64_t* idx);
+
+/*
+Find the minimum element in an array and store its index
+in `idx`.
+*/
+double find_min(double arr[], uint64_t length, uint64_t* idx);
 
 #endif

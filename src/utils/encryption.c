@@ -115,7 +115,6 @@ char** get_n_best_plaintexts(char** ciphertexts, uint64_t ciphertext_length, uns
     char** result = malloc(n * sizeof(char*));
     double current_score, worst_best_score;
     char* current_plaintext;
-    double scores[n];
     uint64_t worst_score_idx;
 
     // Decrypt the first n ciphertexts
@@ -152,4 +151,19 @@ double find_max(double arr[], uint64_t length, uint64_t* idx) {
     }
 
     return max_so_far;
+}
+
+double find_min(double arr[], uint64_t length, uint64_t* idx) {
+    double min_so_far = arr[0], current;
+    *idx = 0;
+
+    for (int i = 0; i < length; ++i) {
+        current = arr[i];
+        if (current < min_so_far) {
+            min_so_far = current;
+            *idx = i;
+        }
+    }
+
+    return min_so_far;
 }
