@@ -1,4 +1,5 @@
 #include "encryption.h"
+#include "hamming.h"
 
 char* xor_buffers(char* buf1, char* buf2, uint64_t length) {
     char* result = (char*) malloc(length + 1);
@@ -166,4 +167,37 @@ double find_min(double arr[], uint64_t length, uint64_t* idx) {
     }
 
     return min_so_far;
+}
+
+void get_key_sizes(char* ciphertext, uint64_t n, uint64_t* key_size_arr,
+        uint64_t key_size_limit)
+{
+    double* distances = malloc(n * sizeof(double));
+    double current_distance, worst_best_distance;
+    uint64_t worst_distance_idx;
+
+    for (uint64_t block_size = 1; block_size < n + 1; ++block_size) {
+        distances[block_size-1] = normalised_hamming_distance(ciphertext, block_size);
+        key_size_arr[block_size-1] = block_size;
+    }
+
+    for (uint64_t block_size = n + 1; block_size < key_size_limit; ++block_size) {
+        current_distance = normalised_hamming_distance(ciphertext, block_size);
+        worst_best_distance = find_max(distances, n, &worst_distance_idx);
+        if (current_distance < worst_best_distance) {
+            distances[worst_distance_idx] = current_distance;
+            key_size_arr[worst_distance_idx] = block_size;
+        }
+    }
+}
+
+double normalised_hamming_distance(char* ciphertext, uint64_t block_size) {
+    char* block1 = malloc(block_size);
+    char* block2 = malloc(block_size);
+    memcpy(block1, ciphertext, block_size);
+    memcpy(block2, ciphertext + block_size, block_size);
+    uint64_t distance = hamming_distance(block1, block2, block_size);
+    free(block1);
+    free(block2);
+    return ((double) distance) / block_size;
 }

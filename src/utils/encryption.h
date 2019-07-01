@@ -6,6 +6,7 @@
 #include <float.h>
 #include <string.h>
 #include <stdio.h>
+#include "hamming.h"
 
 #define ALPHA_SPACE 27
 
@@ -97,5 +98,15 @@ Find the minimum element in an array and store its index
 in `idx`.
 */
 double find_min(double arr[], uint64_t length, uint64_t* idx);
+
+/*
+Find the `n` key sizes that yield the smallest Hamming distances
+between the first two blocks of `ciphertext`.
+Try key sizes up to `key_size_limit` and store the best in `key_size_arr`.
+*/
+void get_key_sizes(char* ciphertext, uint64_t n, uint64_t* key_size_arr,
+        uint64_t key_size_limit);
+
+double normalised_hamming_distance(char* ciphertext, uint64_t block_size);
 
 #endif
