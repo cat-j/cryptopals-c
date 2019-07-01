@@ -1,7 +1,7 @@
 #include "encryption.h"
 
 char* xor_buffers(char* buf1, char* buf2, uint64_t length) {
-    char* result = (char*) malloc((length + 1) * sizeof(char));
+    char* result = (char*) malloc(length + 1);
 
     for (uint64_t i = 0; i < length; ++i) {
         result[i] = buf1[i] ^ buf2[i];
@@ -67,7 +67,7 @@ double score_english_frequency(char* plaintext, uint64_t length) {
 char* xor_encrypt(char* plaintext, unsigned char* key, uint64_t plaintext_length,
         uint64_t key_length)
 {
-    char* ciphertext = malloc((plaintext_length + 1) * sizeof(char));
+    char* ciphertext = malloc(plaintext_length + 1);
     char current_byte;
 
     for (int i = 0; i < plaintext_length; i++) {
@@ -83,9 +83,9 @@ char* frequency_decrypt(char* ciphertext, uint64_t ciphertext_length, unsigned c
         double* score_ptr)
 {
     const uint64_t key_length = 1;
-    unsigned char* current_key = malloc(key_length * sizeof(char));
+    unsigned char* current_key = malloc(key_length);
     char* current_plaintext;
-    char* best_plaintext = malloc((ciphertext_length + 1) * sizeof(char));
+    char* best_plaintext = malloc((ciphertext_length + 1));
     double best_score = DBL_MAX, current_score;
 
     for (uint32_t i = 0; i < 256; ++i) {

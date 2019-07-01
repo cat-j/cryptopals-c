@@ -15,7 +15,7 @@ char* hex_to_base64(char* ascii, uint64_t len) {
     char data, next_highest_bits, sextet;
     
     uint64_t encoded_len = n_sextets + (remaining_bits >> 1);
-    char* encoded = malloc((encoded_len + 1) * sizeof(char));
+    char* encoded = malloc((encoded_len + 1));
     
     for (uint64_t i = 0; i < len; ++i) {
         data = ascii[i];
