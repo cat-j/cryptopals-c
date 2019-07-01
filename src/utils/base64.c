@@ -58,7 +58,7 @@ char* base64_decode(char* encoded, uint64_t length) {
     uint64_t idx = 0;
     unsigned char data, current_byte;
 
-    for (int i = 0; i < decoded_length+1; ++i) {
+    for (int i = 0; i < length; ++i) {
         current_byte = get_index(encoded[i]);
 
         switch (i%4) {
