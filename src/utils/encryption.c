@@ -201,3 +201,25 @@ double normalised_hamming_distance(char* ciphertext, uint64_t block_size) {
     free(block2);
     return ((double) distance) / block_size;
 }
+
+char** get_blocks(char* ciphertext, uint64_t length, uint64_t key_size) {
+    char** result = malloc(key_size * sizeof(char*));
+    uint64_t rem = length % key_size;
+    uint64_t block_size = length / key_size + (length%key_size != 0); // ceiling
+    uint64_t whole_blocks = (rem == 0) ? key_size : rem; // how many blocks are complete
+
+    for(uint64_t i = 0; i < key_size; ++i) {
+        if (i < whole_blocks) {
+            result[i] = malloc(block_size);
+        } else {
+            result[i] = malloc(block_size - 1); // incomplete block
+        }
+    }
+
+    // Now that the blocks have been allocated, copy the characters
+    for (uint64_t i = 0; i < length; ++i) {
+        result[i%key_size][i/key_size] = ciphertext[i];
+    }
+
+    return result;
+}

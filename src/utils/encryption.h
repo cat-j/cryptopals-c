@@ -109,4 +109,6 @@ void get_key_sizes(char* ciphertext, uint64_t n, uint64_t* key_size_arr,
 
 double normalised_hamming_distance(char* ciphertext, uint64_t block_size);
 
+char** get_blocks(char* ciphertext, uint64_t length, uint64_t key_size);
+
 #endif
