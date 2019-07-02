@@ -20,14 +20,23 @@ char* base64_encode(char* ascii, uint64_t length) {
     for (uint64_t i = 0; i < length; ++i) {
         data = ascii[i];
 
-        if (i%3 == 0) {
+        switch (i%3) {
+        case 0:
             sextet = data >> 2; // higher 6 bits
             next_highest_bits = (data & 0x3) << 4; // keep lower 2
-        } else if (i%3 == 1) {
+            break;
+        
+        case 1:
             sextet = (data >> 4) | next_highest_bits; // 2 lower prev ++ 4 higher
             next_highest_bits = (data & 0xF) << 2; // keep lower 4
-        } else {
+            break;
+        
+        case 2:
             sextet = (data >> 6) | next_highest_bits; // 4 lower prev ++ 2 higher
+            break;
+        
+        default:
+            break;
         }
 
         encoded[k++] = encoding_table[(uint64_t) sextet];
