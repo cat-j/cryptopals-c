@@ -107,8 +107,17 @@ Try key sizes up to `key_size_limit` and store the best in `key_size_arr`.
 void get_key_sizes(char* ciphertext, uint64_t n, uint64_t* key_size_arr,
         uint64_t key_size_limit);
 
+/*
+Compute the Hamming distance between the first two `block_size` long blocks
+of `ciphertext` and divide it by `block_size`.
+*/
 double normalised_hamming_distance(char* ciphertext, uint64_t block_size);
 
+/*
+Return an array where each block contains the characters of `ciphertext`
+that have a certain position within a `key_size` long block.
+For example, get_blocks("opabinia", 8, 3) -> ["obi", "pia", "an"]
+*/
 char** get_blocks(char* ciphertext, uint64_t length, uint64_t key_size);
 
 #endif
