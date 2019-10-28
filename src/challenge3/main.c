@@ -1,8 +1,9 @@
-#include "../utils/fileutils.h"
-#include "../utils/encryption.h"
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
+
+#include "../utils/encryption.h"
+#include "../utils/fileutils.h"
 
 int main() {
     char filename[] = "byteData";

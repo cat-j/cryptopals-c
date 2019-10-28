@@ -1,7 +1,8 @@
-#include "../utils/base64.h"
-#include "../utils/fileutils.h"
 #include <stdio.h>
 #include <string.h>
+
+#include "base64.h"
+#include "fileutils.h"
 
 int main() {
     char filename[8] = "byteData";

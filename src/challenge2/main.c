@@ -1,8 +1,9 @@
-#include "../utils/fileutils.h"
-#include "../utils/encryption.h"
 #include<stdlib.h>
 #include<stdio.h>
 #include <string.h>
+
+#include "encryption.h"
+#include "fileutils.h"
 
 int main() {
     char filename1[] = "buffer1";

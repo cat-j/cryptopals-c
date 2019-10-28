@@ -1,6 +1,7 @@
+#include <stdint.h>
+
 #include "../utils/fileutils.h"
 #include "../utils/encryption.h"
-#include <stdint.h>
 
 #define N_BEST_PLAINTEXTS 10
 #define KEY_LENGTH 1
